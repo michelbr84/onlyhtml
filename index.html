@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hello World</title>
+  <meta name="description" content="An elegant single-file Hello World page." />
+  <style>
+    :root{
+      --bg1:#0b1220;
+      --bg2:#070a12;
+      --card: rgba(255,255,255,.06);
+      --stroke: rgba(255,255,255,.14);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.68);
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
+      --radius: 22px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background:
+        radial-gradient(900px 650px at 20% 15%, rgba(98,120,255,.22), transparent 60%),
+        radial-gradient(900px 650px at 85% 75%, rgba(255,120,220,.18), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      overflow:hidden;
+    }
+
+    /* subtle grain */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:-40%;
+      background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E");
+      opacity:.08;
+      pointer-events:none;
+      transform: rotate(8deg);
+    }
+
+    .wrap{
+      height:100%;
+      display:grid;
+      place-items:center;
+      padding:24px;
+    }
+
+    .card{
+      width:min(760px, 100%);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      border: 1px solid var(--stroke);
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+      transform: translate3d(0,0,0);
+    }
+
+    .card::after{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: radial-gradient(600px 260px at var(--mx, 50%) var(--my, 30%), rgba(255,255,255,.18), transparent 60%);
+      opacity:.55;
+      pointer-events:none;
+      transition: opacity 180ms ease;
+    }
+
+    header{
+      padding:28px 28px 18px;
+      display:flex;
+      gap:14px;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      min-width: 0;
+    }
+
+    .dot{
+      width:12px; height:12px; border-radius:999px;
+      background: linear-gradient(135deg, rgba(120,255,210,.95), rgba(110,140,255,.95));
+      box-shadow: 0 0 0 6px rgba(120,255,210,.08);
+      flex:0 0 auto;
+    }
+
+    .title{
+      display:flex;
+      flex-direction:column;
+      line-height:1.05;
+      min-width:0;
+    }
+
+    .title strong{
+      font-size:18px;
+      letter-spacing:.2px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .title span{
+      font-size:12px;
+      color: var(--muted);
+      margin-top:3px;
+    }
+
+    .pill{
+      font-size:12px;
+      color: rgba(255,255,255,.78);
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      padding:8px 10px;
+      border-radius:999px;
+      display:flex;
+      gap:8px;
+      align-items:center;
+      user-select:none;
+    }
+
+    .pill kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size:11px;
+      padding:2px 6px;
+      border-radius:8px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.85);
+    }
+
+    main{
+      padding: 0 28px 28px;
+      display:grid;
+      gap:18px;
+    }
+
+    .hero{
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+      padding: 22px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero h1{
+      margin:0;
+      font-size: 42px;
+      letter-spacing:-.8px;
+    }
+
+    .hero p{
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height:1.6;
+      max-width: 55ch;
+    }
+
+    .row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .btns{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:14px;
+    }
+
+    button{
+      appearance:none;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.88);
+      padding: 10px 14px;
+      border-radius: 14px;
+      font-weight: 600;
+      letter-spacing:.2px;
+      cursor:pointer;
+      transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
+      user-select:none;
+    }
+    button:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.09);
+      border-color: rgba(255,255,255,.22);
+    }
+    button:active{ transform: translateY(0px) scale(.99); }
+
+    button.primary{
+      border-color: rgba(120,255,210,.34);
+      background: linear-gradient(135deg, rgba(120,255,210,.18), rgba(110,140,255,.18));
+    }
+
+    .meta{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      color: rgba(255,255,255,.72);
+      font-size: 12px;
+      align-items:center;
+    }
+    .meta .chip{
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.16);
+      padding: 6px 10px;
+      border-radius: 999px;
+    }
+
+    .console{
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.22);
+      padding: 16px 16px 14px;
+    }
+
+    .console-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:10px;
+      color: rgba(255,255,255,.65);
+      font-size: 12px;
+    }
+
+    .traffic{
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+    .traffic i{
+      width:10px; height:10px; border-radius:999px;
+      display:inline-block;
+      background: rgba(255,255,255,.18);
+    }
+
+    pre{
+      margin:0;
+      white-space:pre-wrap;
+      word-break:break-word;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12.5px;
+      line-height:1.55;
+      color: rgba(255,255,255,.86);
+    }
+
+    .footer{
+      padding: 0 28px 24px;
+      color: rgba(255,255,255,.55);
+      font-size: 12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    a{
+      color: rgba(255,255,255,.78);
+      text-decoration:none;
+      border-bottom: 1px dashed rgba(255,255,255,.25);
+    }
+    a:hover{ color: rgba(255,255,255,.92); border-bottom-color: rgba(255,255,255,.45); }
+
+    @media (prefers-reduced-motion: reduce){
+      *{ transition:none !important; animation:none !important; scroll-behavior:auto !important; }
+      .card::after{ transition:none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="card" id="card" aria-label="Hello World Card">
+      <header>
+        <div class="brand">
+          <div class="dot" aria-hidden="true"></div>
+          <div class="title">
+            <strong>Hello World</strong>
+            <span id="subtitle">Loading…</span>
+          </div>
+        </div>
+        <div class="pill" title="Keyboard shortcut">
+          Press <kbd>H</kbd> for hello
+        </div>
+      </header>
+
+      <main>
+        <div class="hero">
+          <div class="row">
+            <div>
+              <h1 id="headline">Hello, World!</h1>
+              <p>
+                A clean single-file page with a subtle interactive glow, keyboard shortcut,
+                and a tiny “console” that logs what’s happening.
+              </p>
+            </div>
+          </div>
+
+          <div class="btns">
+            <button class="primary" id="btnHello" type="button">Say Hello</button>
+            <button id="btnTime" type="button">Show Time</button>
+            <button id="btnCopy" type="button">Copy Greeting</button>
+          </div>
+
+          <div class="meta" style="margin-top:14px;">
+            <span class="chip" id="chipAgent">UA: …</span>
+            <span class="chip" id="chipTheme">Theme: Auto</span>
+            <span class="chip" id="chipTip">Tip: move your mouse ✨</span>
+          </div>
+        </div>
+
+        <div class="console" aria-label="Console output">
+          <div class="console-head">
+            <div class="traffic" aria-hidden="true">
+              <i></i><i></i><i></i>
+            </div>
+            <span id="consoleTitle">client.log</span>
+          </div>
+          <pre id="log" role="log" aria-live="polite"></pre>
+        </div>
+      </main>
+
+      <div class="footer">
+        <span>Single HTML • No external assets • Elegant by default</span>
+        <span><a href="#" id="reset">Reset</a></span>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const $ = (sel) => document.querySelector(sel);
+
+      const card = $("#card");
+      const subtitle = $("#subtitle");
+      const headline = $("#headline");
+      const logEl = $("#log");
+      const chipAgent = $("#chipAgent");
+      const chipTheme = $("#chipTheme");
+
+      const btnHello = $("#btnHello");
+      const btnTime = $("#btnTime");
+      const btnCopy = $("#btnCopy");
+      const reset = $("#reset");
+
+      const state = {
+        helloCount: 0,
+        greeting: "Hello, World!",
+      };
+
+      const now = () => new Date();
+      const pad2 = (n) => String(n).padStart(2, "0");
+      const fmtTime = (d) => `${pad2(d.getHours())}:${pad2(d.getMinutes())}:${pad2(d.getSeconds())}`;
+
+      function log(line) {
+        const ts = fmtTime(now());
+        logEl.textContent += `[${ts}] ${line}\n`;
+        logEl.scrollTop = logEl.scrollHeight;
+      }
+
+      function setSubtitle() {
+        const d = now();
+        const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "local";
+        subtitle.textContent = `Ready • ${d.toDateString()} • ${tz}`;
+      }
+
+      function setThemeChip() {
+        const isDark = matchMedia("(prefers-color-scheme: dark)").matches;
+        chipTheme.textContent = `Theme: ${isDark ? "Dark" : "Light"} (Auto)`;
+      }
+
+      function updateUA() {
+        const ua = navigator.userAgent || "";
+        const short = ua.length > 34 ? ua.slice(0, 34) + "…" : ua;
+        chipAgent.textContent = `UA: ${short}`;
+      }
+
+      function hello() {
+        state.helloCount += 1;
+        const punct = ["!", "!!", "!!!"][Math.min(2, (state.helloCount - 1) % 3)];
+        const msg = `Hello, World${punct}`;
+        state.greeting = msg;
+        headline.textContent = msg;
+        log(`Greeting updated → "${msg}" (count: ${state.helloCount})`);
+        pulse(btnHello);
+      }
+
+      function showTime() {
+        const d = now();
+        log(`Current time: ${d.toLocaleString()}`);
+        pulse(btnTime);
+      }
+
+      async function copyGreeting() {
+        try {
+          await navigator.clipboard.writeText(state.greeting);
+          log(`Copied to clipboard → "${state.greeting}"`);
+          pulse(btnCopy);
+        } catch {
+          // Fallback for restricted clipboard contexts
+          const ta = document.createElement("textarea");
+          ta.value = state.greeting;
+          ta.setAttribute("readonly", "");
+          ta.style.position = "fixed";
+          ta.style.top = "-9999px";
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand("copy");
+          document.body.removeChild(ta);
+          log(`Copied (fallback) → "${state.greeting}"`);
+          pulse(btnCopy);
+        }
+      }
+
+      function pulse(el) {
+        el.animate(
+          [{ transform: "translateY(-1px) scale(1)" }, { transform: "translateY(-1px) scale(1.02)" }, { transform: "translateY(-1px) scale(1)" }],
+          { duration: 220, easing: "ease-out" }
+        );
+      }
+
+      function resetAll(e) {
+        e?.preventDefault?.();
+        state.helloCount = 0;
+        state.greeting = "Hello, World!";
+        headline.textContent = state.greeting;
+        logEl.textContent = "";
+        setSubtitle();
+        setThemeChip();
+        updateUA();
+        log("Reset complete.");
+      }
+
+      // Interactive glow (mouse position)
+      function onMove(ev) {
+        const r = card.getBoundingClientRect();
+        const x = ((ev.clientX - r.left) / r.width) * 100;
+        const y = ((ev.clientY - r.top) / r.height) * 100;
+        card.style.setProperty("--mx", `${x.toFixed(2)}%`);
+        card.style.setProperty("--my", `${y.toFixed(2)}%`);
+      }
+
+      // Events
+      btnHello.addEventListener("click", hello);
+      btnTime.addEventListener("click", showTime);
+      btnCopy.addEventListener("click", copyGreeting);
+      reset.addEventListener("click", resetAll);
+
+      window.addEventListener("pointermove", onMove, { passive: true });
+
+      // Keyboard shortcut: H
+      window.addEventListener("keydown", (e) => {
+        if (e.key.toLowerCase() === "h") hello();
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "l") {
+          // optional: clear log with Ctrl/Cmd+L
+          e.preventDefault();
+          logEl.textContent = "";
+          log("Log cleared.");
+        }
+      });
+
+      // Theme changes
+      const mq = matchMedia("(prefers-color-scheme: dark)");
+      mq.addEventListener?.("change", setThemeChip);
+
+      // Init
+      setSubtitle();
+      setThemeChip();
+      updateUA();
+      log('Initialized. Click "Say Hello", or press H.');
+    })();
+  </script>
+</body>
+</html>

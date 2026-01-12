@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -17,18 +17,21 @@
       --radius: 22px;
     }
 
-    * { box-sizing:border-box; }
+    *{ box-sizing:border-box; }
     html,body{ height:100%; }
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       color: var(--text);
-      background: #800080;
+      background:
+        radial-gradient(900px 650px at 20% 15%, rgba(98,120,255,.22), transparent 60%),
+        radial-gradient(900px 650px at 85% 75%, rgba(255,120,220,.18), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
       overflow:hidden;
     }
 
     /* subtle grain */
-    body:after{
+    body::before{
       content:"";
       position:fixed;
       inset:-40%;
@@ -49,19 +52,19 @@
     .card{
       width:min(760px, 100%);
       border-radius: var(--radius);
-      border: 1px solid var(--stroke);
       background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      border: 1px solid var(--stroke);
       box-shadow: var(--shadow);
       position:relative;
       overflow:hidden;
       transform: translate3d(0,0,0);
     }
 
-    .card:after{
+    .card::after{
       content:"";
       position:absolute;
       inset:-2px;
-      background: radial-gradient(600px 260px at var(--mx, 50%) var(--my, 30%), rgba(255,120,220,.18), transparent 60%);
+      background: radial-gradient(600px 260px at var(--mx, 50%) var(--my, 30%), rgba(255,255,255,.18), transparent 60%);
       opacity:.55;
       pointer-events:none;
       transition: opacity 180ms ease;
@@ -122,8 +125,9 @@
       align-items:center;
       user-select:none;
     }
+
     .pill kbd{
-      font-family: ui-monospace, SFMono-Regular, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       font-size:11px;
       padding:2px 6px;
       border-radius:8px;
@@ -131,22 +135,15 @@
       background: rgba(255,255,255,.06);
       color: rgba(255,255,255,.85);
     }
+
     main{
       padding: 0 28px 28px;
       display:grid;
-      gap:17px;
+      gap:18px;
     }
 
-    .row{
-      display:flex;
-      flex-wrap:wrap;
-      gap:12px;
-      align-items:center;
-      justify-content:space-between;
-    }
-
-    .heros{
-      border-radius:18px;
+    .hero{
+      border-radius: 18px;
       border: 1px solid rgba(255,255,255,.12);
       background: rgba(0,0,0,.18);
       padding: 22px;
@@ -165,7 +162,15 @@
       color: var(--muted);
       font-size: 14px;
       line-height:1.6;
-      max-width: 55%;
+      max-width: 55ch;
+    }
+
+    .row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
     }
 
     .btns{
@@ -180,9 +185,9 @@
       border: 1px solid rgba(255,255,255,.16);
       background: rgba(255,255,255,.06);
       color: rgba(255,255,255,.88);
-      padding:10px 14px;
-      border-radius:14px;
-      font-weight:600;
+      padding: 10px 14px;
+      border-radius: 14px;
+      font-weight: 600;
       letter-spacing:.2px;
       cursor:pointer;
       transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
@@ -193,7 +198,8 @@
       background: rgba(255,255,255,.09);
       border-color: rgba(255,255,255,.22);
     }
-    button:active { transform: translateY(0px) scale(.99); }
+    button:active{ transform: translateY(0px) scale(.99); }
+
     button.primary{
       border-color: rgba(120,255,210,.34);
       background: linear-gradient(135deg, rgba(120,255,210,.18), rgba(110,140,255,.18));
@@ -210,16 +216,17 @@
     .meta .chip{
       border: 1px solid rgba(255,255,255,.14);
       background: rgba(0,0,0,.16);
-      padding:6px 10px;
-      border-radius:999px;
+      padding: 6px 10px;
+      border-radius: 999px;
     }
 
     .console{
-      border-radius:18px;
+      border-radius: 18px;
       border: 1px solid rgba(255,255,255,.12);
       background: rgba(0,0,0,.22);
       padding: 16px 16px 14px;
     }
+
     .console-head{
       display:flex;
       align-items:center;
@@ -229,6 +236,7 @@
       color: rgba(255,255,255,.65);
       font-size: 12px;
     }
+
     .traffic{
       display:flex;
       gap:8px;
@@ -239,11 +247,12 @@
       display:inline-block;
       background: rgba(255,255,255,.18);
     }
+
     pre{
       margin:0;
       white-space:pre-wrap;
       word-break:break-word;
-      font-family: ui-monospace, SFMono-Regular, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       font-size: 12.5px;
       line-height:1.55;
       color: rgba(255,255,255,.86);
@@ -265,11 +274,11 @@
       text-decoration:none;
       border-bottom: 1px dashed rgba(255,255,255,.25);
     }
-    a:hover { color: rgba(255,255,255,.92); border-bottom-color: rgba(255,255,255,.45); }
+    a:hover{ color: rgba(255,255,255,.92); border-bottom-color: rgba(255,255,255,.45); }
 
     @media (prefers-reduced-motion: reduce){
-      * { transition:none !important; animation:none !important; scroll-behavior:auto !important; }
-      .card:after{ transition:none !important; }
+      *{ transition:none !important; animation:none !important; scroll-behavior:auto !important; }
+      .card::after{ transition:none !important; }
     }
   </style>
 </head>
@@ -290,13 +299,13 @@
       </header>
 
       <main>
-        <div class="heros">
+        <div class="hero">
           <div class="row">
             <div>
               <h1 id="headline">Hello, World!</h1>
               <p>
                 A clean single-file page with a subtle interactive glow, keyboard shortcut,
-                and a tiny ‘console’ that logs what's happening.
+                and a tiny “console” that logs what’s happening.
               </p>
             </div>
           </div>
@@ -308,9 +317,9 @@
           </div>
 
           <div class="meta" style="margin-top:14px;">
-            <span class="chip" id="chipAgent">UA: (unknown)</span>
+            <span class="chip" id="chipAgent">UA: …</span>
             <span class="chip" id="chipTheme">Theme: Auto</span>
-            <span class="chip" id="chipTip">Tip: move your mouse ↗</span>
+            <span class="chip" id="chipTip">Tip: move your mouse ✨</span>
           </div>
         </div>
 
@@ -326,7 +335,7 @@
       </main>
 
       <div class="footer">
-        <span>Single HTML file 🞂 No external assets by default</span>
+        <span>Single HTML • No external assets • Elegant by default</span>
         <span><a href="#" id="reset">Reset</a></span>
       </div>
     </section>
@@ -368,11 +377,11 @@
       function setSubtitle() {
         const d = now();
         const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "local";
-        subtitle.textContent = `Ready 🞂 ${d.toDateString()} ${tz}`;
+        subtitle.textContent = `Ready • ${d.toDateString()} • ${tz}`;
       }
 
       function setThemeChip() {
-        const isDark = matchMedia("(prefers-reduced-color-scheme: dark)").matches;
+        const isDark = matchMedia("(prefers-color-scheme: dark)").matches;
         chipTheme.textContent = `Theme: ${isDark ? "Dark" : "Light"} (Auto)`;
       }
 
@@ -384,11 +393,11 @@
 
       function hello() {
         state.helloCount += 1;
-        const punch = ["!", "!!", "!!!"][Math.min(2, (state.helloCount - 1) % 3)];
-        const msg = `Hello, World${punch}`;
+        const punct = ["!", "!!", "!!!"][Math.min(2, (state.helloCount - 1) % 3)];
+        const msg = `Hello, World${punct}`;
         state.greeting = msg;
         headline.textContent = msg;
-        log(`Greeting updated "${msg}" (count: ${state.helloCount})`);
+        log(`Greeting updated → "${msg}" (count: ${state.helloCount})`);
         pulse(btnHello);
       }
 
@@ -401,9 +410,9 @@
       async function copyGreeting() {
         try {
           await navigator.clipboard.writeText(state.greeting);
-          log(`Copied to clipboard 🞂 "${state.greeting}"`);
+          log(`Copied to clipboard → "${state.greeting}"`);
           pulse(btnCopy);
-        } catch (e) {
+        } catch {
           // Fallback for restricted clipboard contexts
           const ta = document.createElement("textarea");
           ta.value = state.greeting;
@@ -414,7 +423,7 @@
           ta.select();
           document.execCommand("copy");
           document.body.removeChild(ta);
-          log(`Copied (fallback) 🞂 "${state.greeting}"`);
+          log(`Copied (fallback) → "${state.greeting}"`);
           pulse(btnCopy);
         }
       }
@@ -447,6 +456,14 @@
         card.style.setProperty("--my", `${y.toFixed(2)}%`);
       }
 
+      // Events
+      btnHello.addEventListener("click", hello);
+      btnTime.addEventListener("click", showTime);
+      btnCopy.addEventListener("click", copyGreeting);
+      reset.addEventListener("click", resetAll);
+
+      window.addEventListener("pointermove", onMove, { passive: true });
+
       // Keyboard shortcut: H
       window.addEventListener("keydown", (e) => {
         if (e.key.toLowerCase() === "h") hello();
@@ -458,9 +475,9 @@
         }
       });
 
-      // Theme change
-      const mq = matchMedia("(prefers-reduced-color-scheme: dark)");
-      mq?.addEventListener?.("change", setThemeChip);
+      // Theme changes
+      const mq = matchMedia("(prefers-color-scheme: dark)");
+      mq.addEventListener?.("change", setThemeChip);
 
       // Init
       setSubtitle();
